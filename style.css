@@ -1,0 +1,50 @@
+:root {
+    --bg-color: #e5e4e2; /* Parchment/canvas feel */
+    --dragon-color: #1a1a1a; /* Tattoo ink */
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212; 
+    --dragon-color: #e5e4e2; /* White ink on dark skin */
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-color);
+    transition: background-color 0.8s ease;
+    cursor: crosshair;
+}
+
+#canvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+}
+
+#theme-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--dragon-color);
+    background: transparent;
+    color: var(--dragon-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s ease, border-color 0.8s ease, color 0.8s ease;
+    opacity: 0.3;
+}
+
+#theme-toggle:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
