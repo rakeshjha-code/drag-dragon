@@ -7,6 +7,20 @@ const html = document.documentElement;
 
 // --- Theme Management ---
 let isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+let dragonColor = '#1a1a1a';
+let bgColor = '#e5e4e2';
+
+function getStyleVariable(name) {
+    return getComputedStyle(html).getPropertyValue(name).trim();
+}
+
+function updateTheme() {
+    html.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    moonIcon.style.display = isDark ? 'none' : 'block';
+    sunIcon.style.display = isDark ? 'block' : 'none';
+    dragonColor = getStyleVariable('--dragon-color') || (isDark ? '#e5e4e2' : '#1a1a1a');
+    bgColor = getStyleVariable('--bg-color') || (isDark ? '#121212' : '#e5e4e2');
+}
 updateTheme();
 
 themeToggle.addEventListener('click', () => {
@@ -14,15 +28,10 @@ themeToggle.addEventListener('click', () => {
     updateTheme();
 });
 
-function updateTheme() {
-    html.setAttribute('data-theme', isDark ? 'dark' : 'light');
-    moonIcon.style.display = isDark ? 'none' : 'block';
-    sunIcon.style.display = isDark ? 'block' : 'none';
-}
-
-function getStyleVariable(name) {
-    return getComputedStyle(html).getPropertyValue(name).trim();
-}
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    isDark = e.matches;
+    updateTheme();
+});
 
 // --- Canvas Sizing ---
 let width, height;
@@ -59,9 +68,6 @@ for (let i = 0; i < numPoints; i++) {
 }
 
 function update() {
-    const dragonColor = getStyleVariable('--dragon-color');
-    const bgColor = getStyleVariable('--bg-color');
-    
     ctx.clearRect(0, 0, width, height);
     
     // --- Smooth Movement Physics ---
