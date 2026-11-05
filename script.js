@@ -36,28 +36,32 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
 // --- Canvas Sizing ---
 let width, height;
 function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
+    const dpr = window.devicePixelRatio || 1;
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 window.addEventListener('resize', resize);
 resize();
 
-// --- Mouse Tracking ---
+// --- Pointer Tracking ---
 let mouseX = width / 2;
 let mouseY = height / 2;
 let targetX = mouseX;
 let targetY = mouseY;
 
-window.addEventListener('mousemove', (e) => {
+window.addEventListener('pointermove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
 });
-window.addEventListener('touchmove', (e) => {
-    if (e.touches.length > 0) {
-        mouseX = e.touches[0].clientX;
-        mouseY = e.touches[0].clientY;
-    }
-}, { passive: true });
+window.addEventListener('pointerdown', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
 
 // --- Smooth Dragon Physics Setup ---
 const numPoints = 60; // Extra long for elegance

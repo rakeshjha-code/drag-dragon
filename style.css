@@ -17,6 +17,7 @@ body, html {
     background-color: var(--bg-color);
     transition: background-color 0.8s ease;
     cursor: crosshair;
+    touch-action: none;
 }
 
 #canvas {
